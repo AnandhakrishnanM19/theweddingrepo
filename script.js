@@ -184,6 +184,21 @@
   googleUrl.searchParams.set('ctz', event.timezone);
   googleUrl.searchParams.set('location', event.venue);
   googleUrl.searchParams.set('details', description);
+
+  const encodeIntentValue = (value) => encodeURIComponent(value);
+  const androidIntentUrl = [
+    'intent://com.android.calendar/events#Intent',
+    'scheme=content',
+    'action=android.intent.action.INSERT',
+    'type=vnd.android.cursor.dir/event',
+    `S.title=${encodeIntentValue(event.title)}`,
+    `l.beginTime=${event.start.getTime()}`,
+    `l.endTime=${event.end.getTime()}`,
+    `S.eventLocation=${encodeIntentValue(`${event.venue} — ${event.maps}`)}`,
+    `S.description=${encodeIntentValue(description)}`,
+    `S.browser_fallback_url=${encodeIntentValue(googleUrl.toString())}`,
+    'end',
+  ].join(';');
   const escapeIcs = (value) => value
     .replace(/\\/g, '\\\\')
     .replace(/\r?\n/g, '\\n')
@@ -268,14 +283,8 @@
   trigger.addEventListener('click', () => {
     const platform = getPlatform();
     if (platform === 'android') {
-      feedback.textContent = 'Your event is ready in Google Calendar. Tap Save to add it.';
-      const handoff = document.createElement('a');
-      handoff.href = googleUrl.toString();
-      handoff.target = '_blank';
-      handoff.rel = 'noopener noreferrer';
-      document.body.append(handoff);
-      handoff.click();
-      handoff.remove();
+      feedback.textContent = 'Opening your calendar. Review the details and tap Save to add the event.';
+      window.location.assign(androidIntentUrl);
       return;
     }
 

@@ -2,7 +2,7 @@
 
 This is a lightweight, responsive static website. Its opening screen features a gold Ganesh line illustration, with a tap or three-second timer triggering a particle and smoke dissolve into the invitation. The invitation photos and art are local; it does not need a remote renderer.
 
-The ceremony's one-tap calendar button detects Android, iOS/iPadOS, and other devices. Android opens a prefilled Google Calendar event; iOS/iPadOS and desktop download a generated `.ics` with 1-day and 2-hour `VALARM` reminders and the temple Maps link. Calendar apps control whether imported alarms become device notifications, and Google Calendar asks the guest to tap Save.
+The ceremony's one-tap calendar button detects Android, iOS/iPadOS, and other devices. Android hands off a prefilled event to the native calendar insert intent, with a Google Calendar web fallback; iOS/iPadOS and desktop download a generated `.ics` with 1-day and 2-hour `VALARM` reminders and the temple Maps link. Calendar apps control whether imported alarms become device notifications, and users must confirm the event in their calendar app.
 
 To preview from this folder, run `python -m http.server 8000` and open `http://localhost:8000`.
 
