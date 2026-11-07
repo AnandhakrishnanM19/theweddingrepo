@@ -153,3 +153,130 @@
     revealItems.forEach((item) => item.classList.add('is-visible'));
   }
 })();
+
+(() => {
+  const dialog = document.querySelector('#calendar-dialog');
+  const trigger = document.querySelector('#calendar-trigger');
+  const closeButton = document.querySelector('#calendar-close');
+  const googleLink = document.querySelector('#google-calendar-link');
+  const downloadButton = document.querySelector('#download-ics');
+  if (!dialog || !trigger || !closeButton || !googleLink || !downloadButton) return;
+
+  const event = {
+    title: 'Wedding Muhurtham | Kerala Wedding',
+    venue: 'Mankottathil Sree Dharmasastha Bhuvaneshwari Kshethram',
+    start: new Date('2027-01-20T23:00:00+05:30'),
+    end: new Date('2027-01-20T23:30:00+05:30'),
+    timezone: 'Asia/Kolkata',
+    maps: 'https://maps.app.goo.gl/MU1248SxpvKfSPux9',
+  };
+
+  const directions = `Google Maps directions: ${event.maps}`;
+  const description = [
+    'Join us for the wedding ceremony and Muhurtham.',
+    'Muhurtham: 11:00 PM–11:30 PM IST on Wednesday, 20 January 2027.',
+    `Venue: ${event.venue}.`,
+    directions,
+  ].join('\n\n');
+
+  const isoUtc = (date) => date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  const googleUrl = new URL('https://calendar.google.com/calendar/render');
+  googleUrl.searchParams.set('action', 'TEMPLATE');
+  googleUrl.searchParams.set('text', event.title);
+  googleUrl.searchParams.set('dates', `${isoUtc(event.start)}/${isoUtc(event.end)}`);
+  googleUrl.searchParams.set('ctz', event.timezone);
+  googleUrl.searchParams.set('location', event.venue);
+  googleUrl.searchParams.set('details', description);
+  googleLink.href = googleUrl.toString();
+
+  const escapeIcs = (value) => value
+    .replace(/\\/g, '\\\\')
+    .replace(/\r?\n/g, '\\n')
+    .replace(/,/g, '\\,')
+    .replace(/;/g, '\\;');
+
+  const foldIcsLine = (line) => {
+    const encoder = new TextEncoder();
+    let output = '';
+    let current = '';
+    let byteCount = 0;
+    for (const character of line) {
+      const size = encoder.encode(character).length;
+      if (byteCount + size > 75) {
+        output += `${current}\r\n `;
+        current = '';
+        byteCount = 1;
+      }
+      current += character;
+      byteCount += size;
+    }
+    return output + current;
+  };
+
+  const buildIcs = () => {
+    const stamp = isoUtc(new Date());
+    const lines = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Wedding Invitation//Kerala Wedding//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      'UID:wedding-muhurtham-20270120@theweddingrepo',
+      `DTSTAMP:${stamp}`,
+      `DTSTART:${isoUtc(event.start)}`,
+      `DTEND:${isoUtc(event.end)}`,
+      `SUMMARY:${escapeIcs(event.title)}`,
+      `LOCATION:${escapeIcs(`${event.venue} — ${event.maps}`)}`,
+      `URL:${event.maps}`,
+      `DESCRIPTION:${escapeIcs(description)}`,
+      'STATUS:CONFIRMED',
+      'TRANSP:OPAQUE',
+      'BEGIN:VALARM',
+      'ACTION:DISPLAY',
+      'TRIGGER:-P1D',
+      `DESCRIPTION:${escapeIcs('Tomorrow is the wedding, get ready!')}`,
+      'END:VALARM',
+      'BEGIN:VALARM',
+      'ACTION:DISPLAY',
+      'TRIGGER:-PT2H',
+      `DESCRIPTION:${escapeIcs('Muhurtham begins in two hours, at 11:00 PM IST.')}`,
+      'END:VALARM',
+      'END:VEVENT',
+      'END:VCALENDAR',
+    ];
+    return `${lines.map(foldIcsLine).join('\r\n')}\r\n`;
+  };
+
+  const openDialog = () => {
+    if (typeof dialog.showModal === 'function') dialog.showModal();
+    else dialog.setAttribute('open', '');
+    closeButton.focus();
+  };
+  const closeDialog = () => {
+    if (typeof dialog.close === 'function') dialog.close();
+    else dialog.removeAttribute('open');
+    trigger.focus();
+  };
+
+  trigger.addEventListener('click', openDialog);
+  closeButton.addEventListener('click', closeDialog);
+  googleLink.addEventListener('click', () => {
+    window.setTimeout(closeDialog, 0);
+  });
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) closeDialog();
+  });
+  downloadButton.addEventListener('click', () => {
+    const blob = new Blob([buildIcs()], { type: 'text/calendar;charset=utf-8' });
+    const objectUrl = URL.createObjectURL(blob);
+    const download = document.createElement('a');
+    download.href = objectUrl;
+    download.download = 'wedding-muhurtham-20-january-2027.ics';
+    document.body.append(download);
+    download.click();
+    download.remove();
+    window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+    closeDialog();
+  });
+})();
