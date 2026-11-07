@@ -81,11 +81,11 @@
         <h2>A sacred<br><em>beginning</em></h2>
         <div class="event-date"><span class="date-day">20</span><span class="date-month">January<br><small>Wednesday · 2027</small></span></div>
         <div class="calendar-action">
-          <button class="calendar-trigger" id="calendar-trigger" type="button" aria-haspopup="dialog" aria-controls="calendar-dialog">
+          <button class="calendar-trigger flex w-full items-center gap-3" id="calendar-trigger" type="button">
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7.5 3v4M16.5 3v4M4 9h16M8 13h2m4 0h2m-8 4h2"/></svg>
-            <span>Mark the date</span><span class="calendar-trigger-arrow" aria-hidden="true">↗</span>
+            <span>Add to Calendar</span><span class="calendar-trigger-arrow" aria-hidden="true">↗</span>
           </button>
-          <span class="calendar-action-note">Save the ceremony to your calendar</span>
+          <span class="calendar-action-note" id="calendar-feedback" role="status" aria-live="polite">One tap opens or downloads a ready-to-save event.</span>
         </div>
         <div class="detail-row"><span class="detail-icon" aria-hidden="true">◷</span><div><span class="detail-label">Muhūrtham</span><strong>11:00 PM – 11:30 PM</strong></div></div>
         <div class="detail-row"><span class="detail-icon" aria-hidden="true">⌖</span><div><span class="detail-label">At the temple</span><strong>Mankottathil Sree Dharmasastha<br>Bhuvaneshwari Kshethram</strong></div></div>
@@ -140,29 +140,6 @@
   </main>
 
   <footer class="footer"><span>With love & blessings</span><span class="ramayana-quote">“She shall be your companion in dharma.”<small>Janaka to Rama · Valmiki Ramayana, Bala Kanda 1.73.27</small></span></footer>
-  <dialog class="calendar-dialog m-auto w-[calc(100%-2rem)] max-w-lg overflow-hidden rounded-3xl border border-[#d8c39a] bg-[#f6f1e7] p-0 text-[#26382e] shadow-2xl" id="calendar-dialog" aria-labelledby="calendar-title" aria-describedby="calendar-description">
-    <div class="p-6 sm:p-8">
-      <div class="calendar-dialog-heading">
-        <div>
-          <p class="eyebrow"><span class="eyebrow-line"></span> A day to remember</p>
-          <h2 id="calendar-title">Mark the date</h2>
-        </div>
-        <button class="calendar-close" id="calendar-close" type="button" aria-label="Close calendar options">×</button>
-      </div>
-      <p class="calendar-dialog-description" id="calendar-description">Choose a calendar. The ceremony date, Muhurtham time, and temple location are filled in for you.</p>
-      <div class="mt-6 grid gap-3 sm:grid-cols-2">
-        <a class="calendar-choice" id="google-calendar-link" href="#" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.6 12.2c0-.6-.1-1.1-.2-1.7H12v3.2h4.3a3.7 3.7 0 0 1-1.6 2.4v2.1h2.7c1.6-1.5 2.2-3.7 2.2-6Z"/><path d="M12 20c2.2 0 4-.7 5.4-1.9l-2.7-2.1c-.7.5-1.6.8-2.7.8-2.1 0-3.8-1.4-4.5-3.3H4.7v2.2A8.2 8.2 0 0 0 12 20Z"/><path d="M7.5 13.5a4.9 4.9 0 0 1 0-3V8.3H4.7a8.2 8.2 0 0 0 0 7.4l2.8-2.2Z"/><path d="M12 7.2c1.2 0 2.3.4 3.1 1.2l2.4-2.4A8 8 0 0 0 12 4a8.2 8.2 0 0 0-7.3 4.3l2.8 2.2c.7-1.9 2.4-3.3 4.5-3.3Z"/></svg>
-          <span><strong>Google Calendar</strong><small>Open the ready-filled event</small></span><span class="calendar-choice-arrow" aria-hidden="true">↗</span>
-        </a>
-        <button class="calendar-choice" id="download-ics" type="button">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7.5 3v4M16.5 3v4M4 9h16m-8 3v6m-2.5-2.5L12 18l2.5-2.5"/></svg>
-          <span><strong>Apple / Outlook</strong><small>Download .ics with reminders</small></span><span class="calendar-choice-arrow" aria-hidden="true">↓</span>
-        </button>
-      </div>
-      <p class="calendar-dialog-note">Google Calendar opens with the details filled in; tap Save there. The .ics file includes 1-day and 2-hour reminders where supported by your calendar app.</p>
-    </div>
-  </dialog>
   </div>
 </body>
 </html>

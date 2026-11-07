@@ -155,12 +155,9 @@
 })();
 
 (() => {
-  const dialog = document.querySelector('#calendar-dialog');
   const trigger = document.querySelector('#calendar-trigger');
-  const closeButton = document.querySelector('#calendar-close');
-  const googleLink = document.querySelector('#google-calendar-link');
-  const downloadButton = document.querySelector('#download-ics');
-  if (!dialog || !trigger || !closeButton || !googleLink || !downloadButton) return;
+  const feedback = document.querySelector('#calendar-feedback');
+  if (!trigger || !feedback) return;
 
   const event = {
     title: 'Wedding Muhurtham | Kerala Wedding',
@@ -187,8 +184,6 @@
   googleUrl.searchParams.set('ctz', event.timezone);
   googleUrl.searchParams.set('location', event.venue);
   googleUrl.searchParams.set('details', description);
-  googleLink.href = googleUrl.toString();
-
   const escapeIcs = (value) => value
     .replace(/\\/g, '\\\\')
     .replace(/\r?\n/g, '\\n')
@@ -248,26 +243,17 @@
     return `${lines.map(foldIcsLine).join('\r\n')}\r\n`;
   };
 
-  const openDialog = () => {
-    if (typeof dialog.showModal === 'function') dialog.showModal();
-    else dialog.setAttribute('open', '');
-    closeButton.focus();
-  };
-  const closeDialog = () => {
-    if (typeof dialog.close === 'function') dialog.close();
-    else dialog.removeAttribute('open');
-    trigger.focus();
+  const getPlatform = () => {
+    const userAgent = navigator.userAgent || '';
+    const platform = navigator.platform || '';
+    const isAppleMobile = /iPhone|iPad|iPod/i.test(userAgent)
+      || (platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (isAppleMobile) return 'ios';
+    if (/Android/i.test(userAgent)) return 'android';
+    return 'other';
   };
 
-  trigger.addEventListener('click', openDialog);
-  closeButton.addEventListener('click', closeDialog);
-  googleLink.addEventListener('click', () => {
-    window.setTimeout(closeDialog, 0);
-  });
-  dialog.addEventListener('click', (e) => {
-    if (e.target === dialog) closeDialog();
-  });
-  downloadButton.addEventListener('click', () => {
+  const downloadCalendarFile = () => {
     const blob = new Blob([buildIcs()], { type: 'text/calendar;charset=utf-8' });
     const objectUrl = URL.createObjectURL(blob);
     const download = document.createElement('a');
@@ -276,7 +262,26 @@
     document.body.append(download);
     download.click();
     download.remove();
-    window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
-    closeDialog();
+    window.setTimeout(() => URL.revokeObjectURL(objectUrl), 60_000);
+  };
+
+  trigger.addEventListener('click', () => {
+    const platform = getPlatform();
+    if (platform === 'android') {
+      feedback.textContent = 'Your event is ready in Google Calendar. Tap Save to add it.';
+      const handoff = document.createElement('a');
+      handoff.href = googleUrl.toString();
+      handoff.target = '_blank';
+      handoff.rel = 'noopener noreferrer';
+      document.body.append(handoff);
+      handoff.click();
+      handoff.remove();
+      return;
+    }
+
+    downloadCalendarFile();
+    feedback.textContent = platform === 'ios'
+      ? 'Your calendar file is ready. Open it and confirm Add on your iPhone or iPad.'
+      : 'Your .ics file is downloaded. Open it with your calendar app to add the event.';
   });
 })();
