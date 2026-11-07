@@ -168,74 +168,6 @@
     maps: 'https://maps.app.goo.gl/MU1248SxpvKfSPux9',
   };
 
-  const directions = `Google Maps directions: ${event.maps}`;
-  const description = [
-    'Join us for the wedding ceremony and Muhurtham.',
-    'Muhurtham: 11:00 AM–11:30 AM IST on Wednesday, 20 January 2027.',
-    `Venue: ${event.venue}.`,
-    directions,
-  ].join('\n\n');
-
-  const isoUtc = (date) => date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-  const escapeIcs = (value) => value
-    .replace(/\\/g, '\\\\')
-    .replace(/\r?\n/g, '\\n')
-    .replace(/,/g, '\\,')
-    .replace(/;/g, '\\;');
-
-  const foldIcsLine = (line) => {
-    const encoder = new TextEncoder();
-    let output = '';
-    let current = '';
-    let byteCount = 0;
-    for (const character of line) {
-      const size = encoder.encode(character).length;
-      if (byteCount + size > 75) {
-        output += `${current}\r\n `;
-        current = '';
-        byteCount = 1;
-      }
-      current += character;
-      byteCount += size;
-    }
-    return output + current;
-  };
-
-  const buildIcs = () => {
-    const stamp = isoUtc(new Date());
-    const lines = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Wedding Invitation//Kerala Wedding//EN',
-      'CALSCALE:GREGORIAN',
-      'METHOD:PUBLISH',
-      'BEGIN:VEVENT',
-      'UID:vishnu-meenakshi-muhurtham-20270120@theweddingrepo',
-      `DTSTAMP:${stamp}`,
-      `DTSTART:${isoUtc(event.start)}`,
-      `DTEND:${isoUtc(event.end)}`,
-      `SUMMARY:${escapeIcs(event.title)}`,
-      `LOCATION:${escapeIcs(`${event.venue} — ${event.maps}`)}`,
-      `URL:${event.maps}`,
-      `DESCRIPTION:${escapeIcs(description)}`,
-      'STATUS:CONFIRMED',
-      'TRANSP:OPAQUE',
-      'BEGIN:VALARM',
-      'ACTION:DISPLAY',
-      'TRIGGER:-P1D',
-      `DESCRIPTION:${escapeIcs('Tomorrow is the wedding, get ready!')}`,
-      'END:VALARM',
-      'BEGIN:VALARM',
-      'ACTION:DISPLAY',
-      'TRIGGER:-PT2H',
-      `DESCRIPTION:${escapeIcs('Muhurtham begins in two hours, at 11:00 AM IST.')}`,
-      'END:VALARM',
-      'END:VEVENT',
-      'END:VCALENDAR',
-    ];
-    return `${lines.map(foldIcsLine).join('\r\n')}\r\n`;
-  };
-
   const getPlatform = () => {
     const userAgent = navigator.userAgent || '';
     const platform = navigator.platform || '';
@@ -246,49 +178,73 @@
     return 'other';
   };
 
-  if (getPlatform() === 'ios') {
-    feedback.textContent = 'Downloads a ready-filled calendar file. Open it and confirm Add to Calendar.';
+  const fallbackLink = document.querySelector('#calendar-ics-fallback');
+  const googleUrl = new URL('https://calendar.google.com/calendar/render');
+  const isoUtc = (date) => date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  const description = [
+    'Join Vishnu and Meenakshi for their wedding Muhurtham.',
+    'Muhurtham: 11:00 AM–11:30 AM IST on Wednesday, 20 January 2027.',
+    `Venue: ${event.venue}.`,
+    `Google Maps directions: ${event.maps}`,
+  ].join('\n\n');
+  googleUrl.searchParams.set('action', 'TEMPLATE');
+  googleUrl.searchParams.set('text', event.title);
+  googleUrl.searchParams.set('dates', `${isoUtc(event.start)}/${isoUtc(event.end)}`);
+  googleUrl.searchParams.set('ctz', event.timezone);
+  googleUrl.searchParams.set('location', event.venue);
+  googleUrl.searchParams.set('details', description);
+
+  const platform = getPlatform();
+  const inAppBrowser = /WhatsApp|FBAN|FBAV|Instagram|; wv\)/i.test(navigator.userAgent || '');
+  const icsUrl = new URL('assets/vishnu-meenakshi-wedding.ics', window.location.href);
+
+  if (fallbackLink) {
+    if (platform === 'android') {
+      fallbackLink.href = googleUrl.href;
+      fallbackLink.textContent = 'If the calendar app does not open, use Google Calendar';
+    } else if (platform === 'ios') {
+      fallbackLink.href = icsUrl.href;
+      fallbackLink.textContent = 'Open calendar file (.ics)';
+    } else {
+      fallbackLink.href = icsUrl.href;
+      fallbackLink.textContent = 'Download calendar file (.ics)';
+    }
   }
 
-  const fallbackLink = document.querySelector('#calendar-ics-fallback');
-  const downloadCalendarFile = () => {
-    const blob = new Blob([buildIcs()], { type: 'text/calendar;charset=utf-8' });
-    const objectUrl = URL.createObjectURL(blob);
-    const download = document.createElement('a');
-    download.href = objectUrl;
-    download.download = 'vishnu-meenakshi-wedding-20-january-2027.ics';
-    document.body.append(download);
-    download.click();
-    download.remove();
-    window.setTimeout(() => URL.revokeObjectURL(objectUrl), 60_000);
-  };
-
-  fallbackLink?.addEventListener('click', (clickEvent) => {
-    clickEvent.preventDefault();
-    downloadCalendarFile();
-    const platform = getPlatform();
-    feedback.textContent = platform === 'ios'
-      ? 'The calendar file is ready. Open it and confirm Add on your iPhone or iPad.'
-      : 'The .ics file is downloaded. Open it with your calendar app and confirm Save.';
-  });
+  if (platform === 'ios') {
+    feedback.textContent = 'Opens a ready-filled calendar file. Review it and confirm Add to Calendar.';
+  } else if (platform === 'android') {
+    feedback.textContent = 'Opens your calendar with the wedding details filled in. Review and tap Save.';
+  }
 
   trigger.addEventListener('click', () => {
-    const platform = getPlatform();
     if (platform === 'ios') {
-      downloadCalendarFile();
-      feedback.textContent = 'The calendar file is ready. Open it and confirm Add to Calendar.';
+      feedback.textContent = 'Opening the wedding calendar file. Review it and confirm Add to Calendar.';
+      window.location.href = icsUrl.href;
       return;
     }
 
-    const isoUtc = (date) => date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-    const googleUrl = new URL('https://calendar.google.com/calendar/render');
-    googleUrl.searchParams.set('action', 'TEMPLATE');
-    googleUrl.searchParams.set('text', event.title);
-    googleUrl.searchParams.set('dates', `${isoUtc(event.start)}/${isoUtc(event.end)}`);
-    googleUrl.searchParams.set('ctz', event.timezone);
-    googleUrl.searchParams.set('location', event.venue);
-    googleUrl.searchParams.set('details', description);
-    window.open(googleUrl.toString(), '_blank', 'noopener,noreferrer');
-    feedback.textContent = 'Review the ready-filled event in Google Calendar and tap Save to add it.';
+    if (platform === 'android' && !inAppBrowser) {
+      const encodeIntentValue = (value) => encodeURIComponent(value);
+      const androidIntentUrl = [
+        'intent://com.android.calendar/events#Intent',
+        'scheme=content',
+        'action=android.intent.action.INSERT',
+        'type=vnd.android.cursor.dir/event',
+        `S.title=${encodeIntentValue(event.title)}`,
+        `l.beginTime=${event.start.getTime()}`,
+        `l.endTime=${event.end.getTime()}`,
+        `S.eventLocation=${encodeIntentValue(`${event.venue} — ${event.maps}`)}`,
+        `S.description=${encodeIntentValue(description)}`,
+        `S.browser_fallback_url=${encodeIntentValue(googleUrl.href)}`,
+        'end',
+      ].join(';');
+      feedback.textContent = 'Opening your calendar. Review the wedding details and tap Save.';
+      window.location.href = androidIntentUrl;
+      return;
+    }
+
+    feedback.textContent = 'Opening Google Calendar with the wedding details filled in. Review and tap Save.';
+    window.location.href = googleUrl.href;
   });
 })();

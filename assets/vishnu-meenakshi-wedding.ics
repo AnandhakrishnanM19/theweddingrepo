@@ -1,0 +1,31 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Vishnu and Meenakshi//Kerala Wedding Invitation//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Vishnu & Meenakshi Wedding
+BEGIN:VEVENT
+UID:vishnu-meenakshi-muhurtham-20270120@theweddingrepo
+DTSTAMP:20261107T000000Z
+DTSTART:20270120T053000Z
+DTEND:20270120T060000Z
+SUMMARY:Vishnu & Meenakshi - Wedding Muhurtham
+LOCATION:Mankottathil Sree Dharmasastha Bhuvaneshwari Kshethram;
+ https://maps.app.goo.gl/MU1248SxpvKfSPux9
+URL:https://maps.app.goo.gl/MU1248SxpvKfSPux9
+DESCRIPTION:Wedding Muhurtham for Vishnu & Meenakshi.\nDirections:
+ https://maps.app.goo.gl/MU1248SxpvKfSPux9
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Tomorrow is the wedding, get ready!
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:Muhurtham begins in two hours, at 11:00 AM IST.
+END:VALARM
+END:VEVENT
+END:VCALENDAR
