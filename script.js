@@ -177,28 +177,6 @@
   ].join('\n\n');
 
   const isoUtc = (date) => date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-  const googleUrl = new URL('https://calendar.google.com/calendar/render');
-  googleUrl.searchParams.set('action', 'TEMPLATE');
-  googleUrl.searchParams.set('text', event.title);
-  googleUrl.searchParams.set('dates', `${isoUtc(event.start)}/${isoUtc(event.end)}`);
-  googleUrl.searchParams.set('ctz', event.timezone);
-  googleUrl.searchParams.set('location', event.venue);
-  googleUrl.searchParams.set('details', description);
-
-  const encodeIntentValue = (value) => encodeURIComponent(value);
-  const androidIntentUrl = [
-    'intent://com.android.calendar/events#Intent',
-    'scheme=content',
-    'action=android.intent.action.INSERT',
-    'type=vnd.android.cursor.dir/event',
-    `S.title=${encodeIntentValue(event.title)}`,
-    `l.beginTime=${event.start.getTime()}`,
-    `l.endTime=${event.end.getTime()}`,
-    `S.eventLocation=${encodeIntentValue(`${event.venue} — ${event.maps}`)}`,
-    `S.description=${encodeIntentValue(description)}`,
-    `S.browser_fallback_url=${encodeIntentValue(googleUrl.toString())}`,
-    'end',
-  ].join(';');
   const escapeIcs = (value) => value
     .replace(/\\/g, '\\\\')
     .replace(/\r?\n/g, '\\n')
@@ -268,6 +246,103 @@
     return 'other';
   };
 
+  const googleClientId = '1067247521364-fukj8q6alg1n98t0o7ke4htsccormet1.apps.googleusercontent.com';
+  const googleScope = 'https://www.googleapis.com/auth/calendar.events.owned';
+  const eventId = 'a20270120muhurthamc0ffee';
+  const fallbackLink = document.querySelector('#calendar-ics-fallback');
+  let tokenClient = null;
+  let isSaving = false;
+  let isSaved = false;
+
+  const setFallback = (message) => {
+    feedback.textContent = message;
+    if (fallbackLink) fallbackLink.hidden = false;
+    trigger.disabled = false;
+    trigger.removeAttribute('aria-busy');
+    isSaving = false;
+  };
+
+  const markSaved = (message) => {
+    feedback.textContent = message;
+    trigger.disabled = true;
+    trigger.removeAttribute('aria-busy');
+    trigger.classList.add('is-saved');
+    isSaving = false;
+    isSaved = true;
+    if (fallbackLink) fallbackLink.hidden = true;
+  };
+
+  const saveToGoogleCalendar = async (accessToken) => {
+    const eventPayload = {
+      id: eventId,
+      summary: event.title,
+      description,
+      location: event.venue,
+      start: { dateTime: event.start.toISOString(), timeZone: event.timezone },
+      end: { dateTime: event.end.toISOString(), timeZone: event.timezone },
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: 'popup', minutes: 1440 },
+          { method: 'popup', minutes: 120 },
+        ],
+      },
+      visibility: 'private',
+    };
+
+    try {
+      const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(eventPayload),
+      });
+
+      if (response.status === 409) {
+        markSaved('This wedding is already marked in your Google Calendar.');
+        return;
+      }
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        const reason = error.error?.message || `Google Calendar returned ${response.status}.`;
+        throw new Error(reason);
+      }
+
+      markSaved('Date marked in your Google Calendar.');
+    } catch (error) {
+      setFallback(`Google Calendar could not save the date. ${error.message} You can download the .ics instead.`);
+    }
+  };
+
+  const handleTokenResponse = (tokenResponse) => {
+    if (tokenResponse.error || !tokenResponse.access_token) {
+      setFallback('Google Calendar access was not granted. You can download the .ics instead.');
+      return;
+    }
+    void saveToGoogleCalendar(tokenResponse.access_token);
+  };
+
+  const initializeGoogleAuth = () => {
+    const oauth = window.google?.accounts?.oauth2;
+    if (!oauth || tokenClient) return;
+    tokenClient = oauth.initTokenClient({
+      client_id: googleClientId,
+      scope: googleScope,
+      callback: handleTokenResponse,
+      error_callback: (error) => {
+        setFallback(error.type === 'popup_closed'
+          ? 'Google Calendar sign-in was closed. You can try again or download the .ics instead.'
+          : 'Google Calendar could not open. You can try again or download the .ics instead.');
+      },
+    });
+  };
+
+  const googleIdentityScript = document.querySelector('#google-identity-script');
+  initializeGoogleAuth();
+  googleIdentityScript?.addEventListener('load', initializeGoogleAuth, { once: true });
+
   const downloadCalendarFile = () => {
     const blob = new Blob([buildIcs()], { type: 'text/calendar;charset=utf-8' });
     const objectUrl = URL.createObjectURL(blob);
@@ -280,17 +355,31 @@
     window.setTimeout(() => URL.revokeObjectURL(objectUrl), 60_000);
   };
 
-  trigger.addEventListener('click', () => {
+  fallbackLink?.addEventListener('click', (clickEvent) => {
+    clickEvent.preventDefault();
+    downloadCalendarFile();
     const platform = getPlatform();
-    if (platform === 'android') {
-      feedback.textContent = 'Opening your calendar. Review the details and tap Save to add the event.';
-      window.location.assign(androidIntentUrl);
+    feedback.textContent = platform === 'ios'
+      ? 'The calendar file is ready. Open it and confirm Add on your iPhone or iPad.'
+      : 'The .ics file is downloaded. Open it with your calendar app to add the event.';
+  });
+
+  trigger.addEventListener('click', () => {
+    if (isSaving || isSaved) return;
+    initializeGoogleAuth();
+    if (!tokenClient) {
+      setFallback('Google Calendar is still loading or unavailable. Try again, or download the .ics instead.');
       return;
     }
 
-    downloadCalendarFile();
-    feedback.textContent = platform === 'ios'
-      ? 'Your calendar file is ready. Open it and confirm Add on your iPhone or iPad.'
-      : 'Your .ics file is downloaded. Open it with your calendar app to add the event.';
+    isSaving = true;
+    trigger.disabled = true;
+    trigger.setAttribute('aria-busy', 'true');
+    feedback.textContent = 'Connecting to Google Calendar…';
+    try {
+      tokenClient.requestAccessToken({ prompt: '' });
+    } catch {
+      setFallback('Google Calendar could not open. Try again, or download the .ics instead.');
+    }
   });
 })();
