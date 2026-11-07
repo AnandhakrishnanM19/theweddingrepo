@@ -111,7 +111,7 @@
     const autoEnter = window.setTimeout(enterInvitation, 3000);
   }
 
-  const target = new Date('2027-01-20T23:00:00+05:30').getTime();
+  const target = new Date('2027-01-20T11:00:00+05:30').getTime();
   const countdown = document.querySelector('#countdown');
   const fields = {
     days: countdown?.querySelector('[data-days]'),
@@ -162,8 +162,8 @@
   const event = {
     title: 'Wedding Muhurtham | Kerala Wedding',
     venue: 'Mankottathil Sree Dharmasastha Bhuvaneshwari Kshethram',
-    start: new Date('2027-01-20T23:00:00+05:30'),
-    end: new Date('2027-01-20T23:30:00+05:30'),
+    start: new Date('2027-01-20T11:00:00+05:30'),
+    end: new Date('2027-01-20T11:30:00+05:30'),
     timezone: 'Asia/Kolkata',
     maps: 'https://maps.app.goo.gl/MU1248SxpvKfSPux9',
   };
@@ -171,7 +171,7 @@
   const directions = `Google Maps directions: ${event.maps}`;
   const description = [
     'Join us for the wedding ceremony and Muhurtham.',
-    'Muhurtham: 11:00 PM–11:30 PM IST on Wednesday, 20 January 2027.',
+    'Muhurtham: 11:00 AM–11:30 AM IST on Wednesday, 20 January 2027.',
     `Venue: ${event.venue}.`,
     directions,
   ].join('\n\n');
@@ -250,7 +250,7 @@
       'BEGIN:VALARM',
       'ACTION:DISPLAY',
       'TRIGGER:-PT2H',
-      `DESCRIPTION:${escapeIcs('Muhurtham begins in two hours, at 11:00 PM IST.')}`,
+      `DESCRIPTION:${escapeIcs('Muhurtham begins in two hours, at 11:00 AM IST.')}`,
       'END:VALARM',
       'END:VEVENT',
       'END:VCALENDAR',

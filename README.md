@@ -8,4 +8,4 @@ To preview from this folder, run `python -m http.server 8000` and open `http://l
 
 Tailwind utilities used by the calendar button are compiled locally into `tailwind.css`. Rebuild them with `npm install` followed by `npm run build:css`.
 
-The ceremony time is shown as supplied: 11:00 PM–11:30 PM on 20 January 2027. The reception is listed from 4:30 PM onwards based on the supplied start time. The invitation omits couple names because none were included in the details.
+The ceremony time is shown as updated: 11:00 AM–11:30 AM on 20 January 2027. The reception is listed from 4:30 PM onwards based on the supplied start time. The invitation omits couple names because none were included in the details.
