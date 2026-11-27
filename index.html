@@ -1,149 +1,384 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f6f1e7">
-  <meta name="description" content="Vishnu and Meenakshi invite you to celebrate their Kerala wedding on 20 January 2027.">
-  <title>Vishnu &amp; Meenakshi | Wedding Invitation</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="assets/couple-portrait.jpeg" fetchpriority="high">
-  <link rel="stylesheet" href="tailwind.css">
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
+  <meta name="theme-color" content="#f7f4ec">
+  <meta name="description" content="Join Meenakshi and Vishnu as they celebrate their wedding on 20 January 2027 in Kerala.">
+  <title>Meenakshi &amp; Vishnu — A Wedding Invitation</title>
+  <style>
+    :root {
+      --paper: #f7f4ec;
+      --paper-deep: #eee9dc;
+      --sage: #687766;
+      --sage-dark: #3f5144;
+      --ink: #30392f;
+      --muted: #77786d;
+      --gold: #a88a4f;
+      --rule: rgba(122, 119, 91, .28);
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --sans: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    .page { width: min(1160px, calc(100% - 48px)); margin-inline: auto; }
+    .topline { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; border-bottom: 1px solid var(--rule); color: var(--sage-dark); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; }
+    .topline-mark { display: flex; align-items: center; gap: 10px; }
+    .topline-mark svg { width: 22px; height: 22px; }
+    .hero { min-height: 660px; display: grid; grid-template-columns: 1.02fr .98fr; align-items: center; gap: clamp(36px, 7vw, 94px); padding: 56px 0 78px; }
+    .hero-copy { position: relative; z-index: 1; padding: 24px 0; }
+    .eyebrow { color: var(--sage); font-size: 10px; letter-spacing: .3em; line-height: 1.8; text-transform: uppercase; }
+    .hero h1 { margin: 22px 0 16px; font: 400 clamp(58px, 7.8vw, 100px)/.94 var(--serif); letter-spacing: -.055em; color: var(--sage-dark); }
+    .hero h1 span { display: block; }
+    .amp { padding: 6px 0 2px 7px; font: italic 400 .55em/1 var(--serif); color: var(--gold); letter-spacing: 0; }
+    .welcome { margin: 28px 0 0; font: italic 400 clamp(20px, 2.1vw, 25px)/1.55 var(--serif); color: #636959; }
+    .hero-date { margin-top: 37px; display: flex; align-items: center; gap: 18px; color: var(--sage-dark); }
+    .date-rule { width: 42px; height: 1px; background: var(--gold); }
+    .hero-date strong { font: 400 15px/1.4 var(--serif); letter-spacing: .16em; }
+    .hero-date span:last-child { font-size: 10px; letter-spacing: .21em; text-transform: uppercase; }
+    .hero-media { width: 100%; max-width: 470px; justify-self: end; }
+    .hero-image-wrap { position: relative; width: 100%; padding: 12px; border: 1px solid rgba(168,138,79,.5); }
+    .hero-image-wrap::before { content: ""; position: absolute; inset: 5px; border: 1px solid rgba(168,138,79,.28); pointer-events: none; }
+    .hero-image { display: block; width: 100%; height: clamp(440px, 51vw, 584px); object-fit: cover; object-position: 50% 53%; }
+    .image-note { position: absolute; bottom: 27px; right: -22px; writing-mode: vertical-rl; color: var(--sage-dark); background: var(--paper); padding: 14px 9px; font: italic 14px var(--serif); letter-spacing: .08em; }
+    .photo-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 9px; }
+    .photo-strip img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+    .blessing-line { color: #b29a62; font: 500 10px/1.6 var(--sans); letter-spacing: .22em; text-transform: uppercase; }
+    .invitation-band { position: relative; text-align: center; padding: 50px 24px 54px; background: var(--sage-dark); color: var(--paper); }
+    .invitation-band::before, .invitation-band::after { content: ""; position: absolute; left: 50%; width: 1px; height: 27px; background: var(--gold); }
+    .invitation-band::before { top: 0; } .invitation-band::after { bottom: 0; }
+    .invitation-band p:not(.section-kicker) { margin: 0 auto; max-width: 680px; font: 400 clamp(19px, 2.4vw, 26px)/1.65 var(--serif); }
+    .invitation-band .section-kicker { margin-bottom: 13px; }
+    .section { padding: 94px 0; }
+    .section-heading { margin: 0; color: var(--sage-dark); text-align: center; font: 400 clamp(35px, 5vw, 51px)/1.15 var(--serif); letter-spacing: -.025em; }
+    .section-kicker { margin: 0 0 13px; color: var(--gold); text-align: center; font-size: 9px; letter-spacing: .3em; text-transform: uppercase; }
+    .section-intro { max-width: 500px; margin: 14px auto 0; color: var(--muted); text-align: center; font: italic 16px/1.7 var(--serif); }
+    .date-display { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; max-width: 740px; margin: 38px auto 43px; }
+    .date-display .line { height: 1px; background: var(--rule); }
+    .date-center { display: flex; align-items: center; gap: 14px; color: var(--sage-dark); }
+    .date-day { font: 400 76px/.9 var(--serif); letter-spacing: -.06em; }
+    .date-month { display: grid; gap: 4px; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; }
+    .date-month strong { font-weight: 500; }
+    .date-month span { color: var(--muted); }
+    .details-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
+    .event-card { padding: 32px 34px 29px; border: 1px solid var(--rule); background: rgba(255,255,255,.22); }
+    .event-label { color: var(--gold); font-size: 9px; letter-spacing: .24em; text-transform: uppercase; }
+    .event-card h3 { margin: 11px 0 16px; color: var(--sage-dark); font: 400 29px/1.2 var(--serif); }
+    .event-time { padding-bottom: 18px; border-bottom: 1px solid var(--rule); color: var(--ink); font: 400 15px/1.5 var(--serif); }
+    .event-time strong { font-size: 21px; font-weight: 400; }
+    .venue { margin: 18px 0 0; color: var(--muted); font-size: 12px; line-height: 1.75; }
+    .map-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 17px; color: var(--sage-dark); text-decoration: none; font-size: 10px; letter-spacing: .13em; text-transform: uppercase; border-bottom: 1px solid var(--gold); padding-bottom: 5px; }
+    .map-link:hover { color: var(--gold); }
+    .map-link svg { width: 13px; height: 13px; }
+    .calendar-wrap { text-align: center; margin-top: 32px; }
+    .calendar-button { border: 0; padding: 17px 27px; background: var(--sage-dark); color: var(--paper); font: 500 10px var(--sans); letter-spacing: .19em; text-transform: uppercase; cursor: pointer; transition: background .2s, transform .2s; }
+    .calendar-button:hover { background: var(--sage); transform: translateY(-1px); }
+    .calendar-button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+    .calendar-hint { margin: 13px 0 0; color: var(--muted); font: italic 13px/1.6 var(--serif); }
+    .gallery-section { padding: 78px 0 91px; background: var(--paper-deep); }
+    .gallery-grid { display: grid; grid-template-columns: 1.12fr .88fr 1fr 1fr; gap: 14px; margin-top: 37px; align-items: stretch; }
+    .gallery-grid figure { position: relative; margin: 0; overflow: hidden; min-width: 0; background: #e4e0d6; }
+    .gallery-grid figure:nth-child(1), .gallery-grid figure:nth-child(4) { height: 330px; }
+    .gallery-grid figure:nth-child(2), .gallery-grid figure:nth-child(3) { height: 260px; margin-top: 35px; }
+    .gallery-grid img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .55s ease; }
+    .gallery-grid figure:hover img { transform: scale(1.035); }
+    .gallery-grid figure:nth-child(1) img { object-position: 52% 52%; }
+    .gallery-grid figure:nth-child(2) img { object-position: 50% 37%; }
+    .gallery-grid figure:nth-child(3) img { object-position: 50% 48%; }
+    .gallery-grid figure:nth-child(4) img { object-position: 50% 39%; }
+    .gallery-caption { margin-top: 17px; color: var(--sage); text-align: center; font: italic 16px var(--serif); }
+    .families { padding: 88px 0 91px; }
+    .family-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 35px; align-items: center; max-width: 760px; margin: 43px auto 0; text-align: center; }
+    .family-grid h3 { margin: 0 0 13px; color: var(--gold); font-size: 9px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; }
+    .family-grid p { margin: 5px 0; color: var(--sage-dark); font: 400 18px/1.5 var(--serif); }
+    .family-divider { width: 1px; height: 82px; background: var(--rule); }
+    .countdown-section { padding: 76px 0 82px; background: var(--paper-deep); text-align: center; }
+    .countdown-grid { display: flex; justify-content: center; gap: clamp(22px, 6vw, 56px); margin: 36px auto 0; }
+    .countdown-unit { min-width: 70px; color: var(--sage-dark); }
+    .countdown-number { display: block; font: 400 clamp(40px, 7vw, 64px)/1 var(--serif); font-variant-numeric: tabular-nums; }
+    .countdown-label { display: block; margin-top: 9px; color: var(--gold); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; }
+    .quote-sanskrit { margin: 0 auto; color: var(--sage-dark); font: 400 clamp(21px, 3vw, 29px)/1.8 var(--serif); }
+    .quote-translation { margin: 9px auto 0; color: #66685e; font: italic 16px/1.7 var(--serif); }
+    .quote-source { margin-top: 15px; color: var(--gold); font-size: 9px; letter-spacing: .21em; text-transform: uppercase; }
+    /* Opening card sits above the invitation and dissolves away to reveal it. */
+    body.intro-open { overflow: hidden; }
+    .intro-screen { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; overflow-y: auto; padding: 24px 22px; background: radial-gradient(ellipse at 50% 40%, #49372b 0%, #33271f 51%, #211f1b 100%); color: #e5d8c7; cursor: pointer; opacity: 1; visibility: visible; transition: opacity .9s ease, visibility .9s ease; }
+    .intro-screen.is-leaving { opacity: 0; visibility: hidden; pointer-events: none; }
+    .intro-content { width: min(760px, 100%); min-height: calc(100svh - 48px); margin: auto; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 10px; text-align: center; }
+    .intro-names { margin: 0; color: #ead8c5; font: 400 clamp(35px, 6vw, 55px)/1.1 var(--serif); letter-spacing: -.035em; }
+    .intro-amp { color: #cda96f; font-style: italic; }
+    .intro-welcome { margin: 0 0 4px; color: #c4a873; font-size: 9px; letter-spacing: .25em; text-transform: uppercase; }
+    .intro-art-frame { position: relative; width: min(370px, 76vw); margin: 0; padding: 0; filter: drop-shadow(0 14px 32px rgba(12, 10, 8, .25)); }
+    .intro-art { display: block; width: auto; height: min(43svh, 390px); max-width: 100%; margin: auto; object-fit: contain; -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 7%, #000 94%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0%, #000 7%, #000 94%, transparent 100%); }
+    .intro-scripture { width: min(700px, 100%); margin: 0 auto; padding-top: 12px; border-top: 1px solid rgba(207,177,126,.35); }
+    .intro-scripture-mark { margin: 0 0 5px; color: #d5aa69; font: 400 14px/1.5 var(--serif); letter-spacing: .07em; }
+    .intro-screen .quote-sanskrit { color: #cf9b71; font-size: clamp(16px, 2.5vw, 21px); line-height: 1.65; }
+    .intro-screen .quote-translation { max-width: 600px; margin: 6px auto 0; color: #ead8c5; font-size: 14px; line-height: 1.65; }
+    .intro-screen .quote-source { margin-top: 7px; color: #c5a873; font-size: 9px; letter-spacing: .16em; text-transform: none; }
+    .intro-tap-hint { margin: 0; color: #b6a48d; font-size: 8px; letter-spacing: .22em; text-transform: uppercase; }
+    footer { padding: 47px 20px 54px; text-align: center; background: var(--sage-dark); color: var(--paper); }
+    footer .footer-names { margin: 0; font: 400 32px var(--serif); letter-spacing: -.02em; }
+    footer p:last-child { margin: 10px 0 0; color: #dedbcb; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; }
+    footer .footer-signoff { color: #e8ddc8; font: 400 clamp(18px, 3vw, 24px)/1.5 var(--serif); letter-spacing: .02em; text-transform: none; }
+    footer .footer-signoff span { color: #c8ab71; font-style: italic; }
+    @media (max-width: 760px) {
+      .page { width: min(100% - 36px, 560px); }
+      .topline { padding: 17px 0; font-size: 8px; }
+      .hero { min-height: unset; grid-template-columns: 1fr; gap: 27px; padding: 53px 0 57px; }
+      .hero-copy { text-align: center; padding: 0; }
+      .hero h1 { margin-top: 18px; font-size: clamp(65px, 16vw, 91px); }
+      .welcome { margin-top: 18px; }
+      .hero-date { justify-content: center; margin-top: 26px; }
+      .hero-media { width: min(88%, 405px); justify-self: center; }
+      .hero-image { height: min(112vw, 510px); }
+      .image-note { right: -19px; bottom: 21px; }
+      .section { padding: 71px 0; }
+      .date-display { gap: 13px; margin: 30px auto 33px; }
+      .date-day { font-size: 66px; }
+      .details-grid { gap: 12px; }
+      .event-card { padding: 25px 20px 24px; }
+      .event-card h3 { font-size: 25px; }
+      .gallery-section { padding: 66px 0; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 11px; }
+      .gallery-grid figure:nth-child(n) { height: 270px; margin-top: 0; }
+      .gallery-grid figure:nth-child(2), .gallery-grid figure:nth-child(3) { height: 224px; }
+      .families { padding: 70px 0; }
+      .family-grid { gap: 18px; }
+      .family-grid p { font-size: 16px; }
+      .intro-screen { padding: 22px 20px; }
+      .intro-content { min-height: calc(100svh - 44px); }
+      .intro-art-frame { width: min(300px, 76vw); }
+      .intro-art { height: min(40svh, 350px); }
+      .countdown-grid { gap: clamp(12px, 5vw, 30px); }
+    }
+    @media (max-width: 420px) {
+      .page { width: calc(100% - 30px); }
+      .topline { letter-spacing: .13em; }
+      .topline-mark { gap: 6px; }
+      .details-grid { grid-template-columns: 1fr; }
+      .event-card { padding: 26px; }
+      .gallery-grid figure:nth-child(n) { height: 225px; }
+      .family-grid { grid-template-columns: 1fr; gap: 21px; }
+      .family-divider { width: 75px; height: 1px; margin: 0 auto; }
+      .calendar-button { width: 100%; }
+      .countdown-unit { min-width: 58px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: .01ms !important; } }
+  </style>
 </head>
-<body class="intro-pending">
-  <div class="intro-splash" id="intro-splash" role="button" tabindex="0" aria-label="Enter Vishnu and Meenakshi's wedding invitation. Activate to continue">
-    <div class="splash-glow splash-glow-one" aria-hidden="true"></div>
-    <div class="splash-glow splash-glow-two" aria-hidden="true"></div>
-    <div class="splash-arch" aria-hidden="true"></div>
-    <svg class="splash-ganesha" viewBox="0 0 240 290" role="img" aria-labelledby="splash-ganesha-title" xmlns="http://www.w3.org/2000/svg">
-      <title id="splash-ganesha-title">Lord Ganesha, in golden line art</title>
-      <defs>
-        <linearGradient id="splash-gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0bd"/><stop offset=".45" stop-color="#d8b56c"/><stop offset="1" stop-color="#a97b36"/></linearGradient>
-        <filter id="splash-glow"><feGaussianBlur stdDeviation="2.2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-      <g fill="none" stroke="url(#splash-gold)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" filter="url(#splash-glow)">
-        <path d="M120 26c-32 0-57 23-57 54 0 12 5 23 14 32-23 4-37 22-37 44 0 18 13 31 31 31 14 0 25-9 30-21-1 18-7 30-19 40l-21 17c-13 10-20 24-20 40v8h158v-8c0-16-7-30-20-40l-21-17c-12-10-18-22-19-40 5 12 16 21 30 21 18 0 31-13 31-31 0-22-14-40-37-44 9-9 14-20 14-32 0-31-25-54-57-54Z"/>
-        <path d="M63 85c-32-19-50-9-48 15 2 19 19 31 48 33m114-48c32-19 50-9 48 15-2 19-19 31-48 33"/>
-        <path d="M88 97c10-8 21-8 31 0m2 0c10-8 21-8 31 0M120 82c-3 23-5 42-3 58 2 16 14 25 26 20 8-3 10-12 3-17-5-4-11-2-13 3"/>
-        <path d="M91 56l10-17 19-17 19 17 10 17m-48-1h38m-19-32v32"/>
-        <path d="M85 142c8 7 18 10 29 10m12 0c11 0 21-3 29-10m-53 20c5 17 11 26 18 26s13-9 18-26"/>
-        <path d="M74 207c15 11 30 16 46 16s31-5 46-16m-91 21c14 10 29 15 45 15s31-5 45-15"/>
-        <path d="M120 2v8m-4-4h8" stroke-width="1.4"/>
-        <circle cx="120" cy="9" r="3" fill="url(#splash-gold)" stroke="none"/>
-        <path d="M49 257h142m-130 9h118" stroke-width="1.4"/>
-      </g>
-      <g fill="url(#splash-gold)"><circle cx="72" cy="184" r="2.5"/><circle cx="168" cy="184" r="2.5"/><circle cx="120" cy="160" r="3"/><path d="m55 190 3-6 3 6-3 6zm127 0 3-6 3 6-3 6z"/></g>
-    </svg>
-    <p class="splash-blessing">॥ श्री गणेशाय नमः ॥</p>
-    <p class="splash-instruction">Tap anywhere to enter</p>
-    <canvas class="splash-particles" aria-hidden="true"></canvas>
-  </div>
-  <div class="site-content" id="site-content" aria-hidden="true" inert>
-  <a class="skip-link" href="#invitation">Skip to invitation</a>
-  <header class="hero" id="top">
-    <div class="hero-grain" aria-hidden="true"></div>
-    <div class="hero-inner">
-      <div class="hero-copy">
-        <p class="eyebrow"><span class="eyebrow-line"></span> With the blessings of Lord Ganesha <span class="eyebrow-line"></span></p>
-        <p class="hero-kicker">Together with their families</p>
-        <h1>Vishnu <span class="name-ampersand">&amp;</span><br><em>Meenakshi</em></h1>
-        <p class="hero-lede">With love, we invite you to join us as we begin a beautiful new chapter, rooted in tradition and blessed by the people we love.</p>
-        <a class="text-link" href="#invitation">Discover the celebration <span aria-hidden="true">↓</span></a>
+<body class="intro-open">
+  <!-- Separate, responsive welcome screen. It fades away on click or after five seconds. -->
+  <section class="intro-screen" id="welcome-intro" role="dialog" tabindex="0" aria-modal="true" aria-labelledby="intro-title" aria-describedby="intro-quote">
+    <div class="intro-content">
+      <p class="intro-welcome">You are warmly invited</p>
+      <h1 class="intro-names" id="intro-title">Meenakshi <span class="intro-amp">&amp;</span> Vishnu</h1>
+      <!-- The artwork is softly faded at its top and bottom edges to blend into the warm intro palette. -->
+      <figure class="intro-art-frame">
+        <img class="intro-art" src="images/radha-krishna-intro.png" alt="Radha and Krishna together as Krishna plays the flute, surrounded by lotus flowers">
+      </figure>
+      <div class="intro-scripture">
+        <p class="intro-scripture-mark">॥ श्रीकृष्णाय नमः ॥</p>
+        <p class="quote-sanskrit" lang="sa-Deva">अद्वेष्टा सर्वभूतानां मैत्रः करुण एव च ।<br>निर्ममो निरहङ्कारः समदुःखसुखः क्षमी ॥</p>
+        <p class="quote-translation" id="intro-quote">May we walk together in love, compassion and humility, remaining united in happiness and sorrow, and living a life guided by dharma.</p>
+        <div class="quote-source">Inspired by Srimad Bhagavad Gita · 12.13</div>
       </div>
-      <div class="hero-photo-wrap">
-        <div class="hero-photo-frame"><img class="hero-photo" src="assets/couple-portrait.jpeg" alt="The couple beneath a canopy of green trees" fetchpriority="high"></div>
-        <span class="photo-caption">A day made brighter, together</span>
-        <span class="photo-corner" aria-hidden="true">✳</span>
-      </div>
+      <p class="intro-tap-hint">Tap or click anywhere to continue</p>
     </div>
-    <div class="hero-bottom" aria-hidden="true"><span>Kerala</span><span class="bottom-rule"></span><span>January 2027</span></div>
+  </section>
+  <div id="site-content" inert>
+  <header class="page topline">
+    <div class="topline-mark" aria-label="A wedding invitation">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 21C6 17 3 13 4.7 9.3 6 6.5 9.1 7 12 11c2.9-4 6-4.5 7.3-1.7C21 13 18 17 12 21Z"/><path d="M12 11v9M4.5 10c2.5 0 4.8 1 7.5 3 2.7-2 5-3 7.5-3"/></svg>
+      <span>A Kerala wedding celebration</span>
+    </div>
+    <span>Kerala · 20 January 2027</span>
   </header>
 
-  <main id="invitation">
-    <section class="invitation section-pad">
-      <div class="section-heading reveal">
-        <p class="eyebrow"><span class="eyebrow-line"></span> An invitation <span class="eyebrow-line"></span></p>
-        <h2>In the presence of<br><em>family & blessings</em></h2>
-        <p class="section-intro">With grateful hearts, the families of Vishnu and Meenakshi invite you to share in the joy of this sacred day.</p>
+  <main>
+    <section class="page hero" aria-labelledby="couple-names">
+      <div class="hero-copy">
+        <div class="blessing-line">With the blessing of Lord Krishna</div>
+        <h1 id="couple-names"><span>Meenakshi</span><span class="amp">&amp;</span><span>Vishnu</span></h1>
+        <p class="welcome">Together with our families,<br>we welcome you to celebrate our wedding.</p>
+        <div class="hero-date"><span class="date-rule"></span><strong>20 · 01 · 2027</strong><span class="date-rule"></span></div>
       </div>
-      <div class="family-row reveal">
-        <div class="family-card"><p class="family-label">The bride's family</p><p>Rajesh Kumar <span>&</span> Beena Rajesh</p></div>
-        <div class="family-flower" aria-hidden="true">❋</div>
-        <div class="family-card"><p class="family-label">The groom's family</p><p>Venugopal K.S. <span>&</span> Rethnamma Venugopal</p></div>
+      <div class="hero-media">
+        <div class="hero-image-wrap">
+          <img class="hero-image" src="images/WhatsApp%20Image%202026-11-27%20at%204.00.02%20PM%20(1).jpeg" alt="Meenakshi and Vishnu sharing a quiet moment beneath the trees" fetchpriority="high">
+          <span class="image-note">A new chapter begins</span>
+        </div>
+        <div class="photo-strip" aria-label="More moments of Meenakshi and Vishnu">
+          <img src="images/WhatsApp%20Image%202026-11-27%20at%204.00.02%20PM.jpeg" alt="Meenakshi and Vishnu smiling together" loading="lazy">
+          <img src="images/WhatsApp%20Image%202026-11-27%20at%204.00.03%20PM%20(1).jpeg" alt="Meenakshi and Vishnu walking hand in hand" loading="lazy">
+          <img src="images/WhatsApp%20Image%202026-11-27%20at%204.00.03%20PM%20(2).jpeg" alt="Meenakshi and Vishnu together in the shade" loading="lazy">
+          <img src="images/WhatsApp%20Image%202026-11-27%20at%204.00.03%20PM.jpeg" alt="Meenakshi and Vishnu sharing a smile outdoors" loading="lazy">
+        </div>
       </div>
     </section>
 
-    <section class="wedding section-pad" id="wedding">
-      <div class="wedding-image reveal"><img src="assets/couple-together.jpeg" alt="The couple sharing a quiet smile together" loading="lazy"><div class="image-stamp">With<br>joy</div></div>
-      <div class="event-copy reveal">
-        <p class="eyebrow"><span class="eyebrow-line"></span> The wedding ceremony</p>
-        <h2>A sacred<br><em>beginning</em></h2>
-        <div class="event-date"><span class="date-day">20</span><span class="date-month">January<br><small>Wednesday · 2027</small></span></div>
-        <div class="calendar-action">
-          <button class="calendar-trigger flex w-full items-center gap-3" id="calendar-trigger" type="button">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 12-7 12S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.4"/></svg>
-            <span class="calendar-trigger-label">Drop a pin, Save the date</span><span class="calendar-trigger-arrow" aria-hidden="true">↗</span>
-          </button>
-          <span class="calendar-action-note" id="calendar-feedback" role="status" aria-live="polite">Opens a ready-filled calendar event. Review it and tap Save.</span>
-          <a class="calendar-fallback" id="calendar-ics-fallback" href="assets/vishnu-meenakshi-wedding.ics">Download calendar file (.ics)</a>
-        </div>
-        <div class="detail-row"><span class="detail-icon" aria-hidden="true">◷</span><div><span class="detail-label">Muhūrtham</span><strong>11:00 AM – 11:30 AM</strong></div></div>
-        <div class="detail-row"><span class="detail-icon" aria-hidden="true">⌖</span><div><span class="detail-label">At the temple</span><strong>Mankottathil Sree Dharmasastha<br>Bhuvaneshwari Kshethram</strong></div></div>
-        <div class="map-action">
-          <a class="button button-dark map-button" href="https://maps.app.goo.gl/MU1248SxpvKfSPux9" target="_blank" rel="noopener noreferrer">
-            <svg class="map-pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 12-7 12S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.4"/></svg>
-            <span>Open temple location in Maps</span><span class="map-arrow" aria-hidden="true">↗</span>
+    <section class="page section" id="celebration">
+      <p class="section-kicker">Please join us</p>
+      <h2 class="section-heading">The celebration</h2>
+      <p class="section-intro">Two joyful gatherings, one very special day.</p>
+      <div class="date-display" aria-label="Wednesday, 20 January 2027">
+        <span class="line"></span>
+        <div class="date-center"><span class="date-day">20</span><span class="date-month"><strong>Wednesday</strong><span>January · 2027</span></span></div>
+        <span class="line"></span>
+      </div>
+      <div class="details-grid">
+        <article class="event-card">
+          <span class="event-label">The wedding ceremony</span>
+          <h3>A blessed beginning</h3>
+          <div class="event-time">Wednesday, 20 January<br><strong>11:00 am · Muhurtam</strong></div>
+          <p class="venue">Mankoottathil Sree Dhramastha Bhuvaneswari Skethram</p>
+          <a class="map-link" href="https://maps.app.goo.gl/PTFMYocUWFzMn5rQ6" target="_blank" rel="noopener noreferrer" aria-label="Open wedding ceremony location in maps">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M16 8c0 4-6 10-6 10S4 12 4 8a6 6 0 1 1 12 0Z"/><circle cx="10" cy="8" r="2"/></svg>View ceremony location
           </a>
-          <span class="map-hint">Opens Google Maps directions to the temple</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="countdown-band" aria-label="Countdown to the wedding">
-      <div class="countdown-inner"><p class="countdown-label">Until we celebrate</p><div class="countdown" id="countdown"><div><strong data-days>—</strong><span>days</span></div><i>:</i><div><strong data-hours>—</strong><span>hours</span></div><i>:</i><div><strong data-minutes>—</strong><span>minutes</span></div><i>:</i><div><strong data-seconds>—</strong><span>seconds</span></div></div></div>
-    </section>
-
-    <section class="reception section-pad">
-      <div class="event-copy reveal">
-        <p class="eyebrow"><span class="eyebrow-line"></span> The evening before</p>
-        <h2>Let us gather<br><em>and celebrate</em></h2>
-        <div class="event-date"><span class="date-day">19</span><span class="date-month">January<br><small>Tuesday · 2027</small></span></div>
-        <div class="detail-row"><span class="detail-icon" aria-hidden="true">◷</span><div><span class="detail-label">Reception</span><strong>From 4:30 PM onwards</strong></div></div>
-        <div class="detail-row"><span class="detail-icon" aria-hidden="true">⌖</span><div><span class="detail-label">At the bride's home</span><strong>A warm welcome awaits</strong></div></div>
-        <div class="map-action">
-          <a class="button button-outline map-button" href="https://maps.app.goo.gl/iVCguzwUgJj8prqJ7" target="_blank" rel="noopener noreferrer">
-            <svg class="map-pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 12-7 12S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.4"/></svg>
-            <span>Open reception location in Maps</span><span class="map-arrow" aria-hidden="true">↗</span>
+        </article>
+        <article class="event-card">
+          <span class="event-label">The reception</span>
+          <h3>An evening together</h3>
+          <div class="event-time">Wednesday, 20 January<br><strong>4:00 pm</strong></div>
+          <p class="venue">We would love to celebrate the evening with you.</p>
+          <a class="map-link" href="https://maps.app.goo.gl/jsHPXhBcXJYk1wwz7" target="_blank" rel="noopener noreferrer" aria-label="Open reception location in maps">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M16 8c0 4-6 10-6 10S4 12 4 8a6 6 0 1 1 12 0Z"/><circle cx="10" cy="8" r="2"/></svg>View reception location
           </a>
-          <span class="map-hint">Opens Google Maps directions to the bride’s home</span>
+        </article>
+      </div>
+      <div class="calendar-wrap">
+        <button type="button" class="calendar-button" id="calendar-button">Add both dates to my calendar</button>
+        <p class="calendar-hint">One simple calendar file for your device, with wedding and reception reminders.</p>
+      </div>
+    </section>
+
+    <section class="countdown-section" aria-labelledby="countdown-title">
+      <div class="page">
+        <p class="section-kicker">The moment draws near</p>
+        <h2 class="section-heading" id="countdown-title">Until the muhurtam</h2>
+        <p class="section-intro">Wednesday, 20 January 2027 · 11:00 am</p>
+        <div class="countdown-grid" id="wedding-countdown" aria-label="Countdown to the wedding muhurtam">
+          <div class="countdown-unit"><span class="countdown-number" data-count="days">—</span><span class="countdown-label">Days</span></div>
+          <div class="countdown-unit"><span class="countdown-number" data-count="hours">—</span><span class="countdown-label">Hours</span></div>
+          <div class="countdown-unit"><span class="countdown-number" data-count="minutes">—</span><span class="countdown-label">Minutes</span></div>
+          <div class="countdown-unit"><span class="countdown-number" data-count="seconds">—</span><span class="countdown-label">Seconds</span></div>
         </div>
       </div>
-      <div class="reception-image reveal"><img src="assets/couple-close.jpeg" alt="A joyful moment shared by the couple" loading="lazy"><span class="photo-caption">A gathering of hearts</span></div>
     </section>
 
-    <section class="gallery section-pad" aria-label="A few moments together">
-      <div class="gallery-heading reveal"><p class="eyebrow"><span class="eyebrow-line"></span> Our story, in a moment <span class="eyebrow-line"></span></p><h2>Made of little<br><em>forever moments</em></h2></div>
-      <div class="gallery-grid reveal">
-        <figure class="gallery-item gallery-one"><img src="assets/couple-walk.jpeg" alt="Walking hand in hand under the trees" loading="lazy"></figure>
-        <figure class="gallery-item gallery-two"><img src="assets/couple-tree.jpeg" alt="Smiling together beside an old tree" loading="lazy"></figure>
-        <figure class="gallery-item gallery-three"><img src="assets/couple-together.jpeg" alt="The couple looking at one another" loading="lazy"></figure>
+    <section class="families page">
+      <p class="section-kicker">With love from our families</p>
+      <h2 class="section-heading">Our families</h2>
+      <div class="family-grid">
+        <div><h3>Groom’s parents</h3><p>Venugopal KS</p><p>Rethnamma Venugopal</p></div>
+        <div class="family-divider" aria-hidden="true"></div>
+        <div><h3>Bride’s parents</h3><p>Rajesh Kumar</p><p>Beena Rajesh</p></div>
       </div>
     </section>
 
-    <section class="closing section-pad">
-      <div class="closing-ornament" aria-hidden="true">❋</div>
-      <p class="eyebrow">Vishnu &amp; Meenakshi · Your presence is our greatest gift</p>
-      <h2>We look forward<br><em>to celebrating with you</em></h2>
-      <p class="closing-date">20 · 01 · 2027</p>
-      <a class="text-link" href="#top">Back to the beginning <span aria-hidden="true">↑</span></a>
+    <section class="invitation-band" aria-labelledby="formal-invitation-title">
+      <p class="section-kicker" id="formal-invitation-title" style="color:#d2b477">A formal invitation</p>
+      <p>With the blessings of Lord Krishna and our families, we warmly invite you to join us for the wedding ceremony of Meenakshi and Vishnu, followed by an evening reception. Your presence and good wishes will make our celebration complete.</p>
     </section>
+
   </main>
 
-  <footer class="footer"><span>Vishnu &amp; Meenakshi · With love &amp; blessings<br><small class="footer-regards">Regards, Kalyani Rajesh</small></span><span class="ramayana-quote">“She shall be your companion in dharma.”<small>Janaka to Rama · Valmiki Ramayana, Bala Kanda 1.73.27</small></span></footer>
+  <footer>
+    <p class="footer-names">With warm regards</p>
+    <p class="footer-signoff">Kalyani Rajesh <span>&amp;</span> Varun Venugopal</p>
+  </footer>
   </div>
+
+  <script>
+    // Open the main invitation on any intro click/key press or automatically after five seconds.
+    (() => {
+      const intro = document.getElementById('welcome-intro');
+      let dismissed = false;
+      const enter = () => {
+        if (dismissed) return;
+        dismissed = true;
+        intro.classList.add('is-leaving');
+        intro.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('intro-open');
+        window.setTimeout(() => {
+          intro.hidden = true;
+          document.getElementById('site-content').inert = false;
+          const heading = document.getElementById('couple-names');
+          heading.setAttribute('tabindex', '-1');
+          heading.focus({ preventScroll: true });
+        }, 950);
+      };
+      intro.focus({ preventScroll: true });
+      intro.addEventListener('click', enter);
+      intro.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          enter();
+        }
+      });
+      window.setTimeout(enter, 5000);
+    })();
+
+    // Count down to the wedding muhurtam in India Standard Time.
+    (() => {
+      const countdown = document.getElementById('wedding-countdown');
+      const target = new Date('2027-01-20T11:00:00+05:30').getTime();
+      const fields = {
+        days: countdown.querySelector('[data-count="days"]'),
+        hours: countdown.querySelector('[data-count="hours"]'),
+        minutes: countdown.querySelector('[data-count="minutes"]'),
+        seconds: countdown.querySelector('[data-count="seconds"]')
+      };
+      const updateCountdown = () => {
+        const remaining = target - Date.now();
+        if (remaining <= 0) {
+          Object.values(fields).forEach(field => { field.textContent = '00'; });
+          countdown.setAttribute('aria-label', 'The wedding muhurtam has begun');
+          return;
+        }
+        fields.days.textContent = Math.floor(remaining / 86400000).toString();
+        fields.hours.textContent = Math.floor((remaining % 86400000) / 3600000).toString().padStart(2, '0');
+        fields.minutes.textContent = Math.floor((remaining % 3600000) / 60000).toString().padStart(2, '0');
+        fields.seconds.textContent = Math.floor((remaining % 60000) / 1000).toString().padStart(2, '0');
+      };
+      updateCountdown();
+      window.setInterval(updateCountdown, 1000);
+    })();
+
+    // One cross-platform .ics download for both occasions, with three local-time reminders.
+    document.getElementById('calendar-button').addEventListener('click', () => {
+      const ics = [
+        'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Meenakshi and Vishnu//Wedding Invitation//EN',
+        'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:Meenakshi & Vishnu — Wedding',
+        'X-WR-TIMEZONE:Asia/Kolkata',
+        'BEGIN:VTIMEZONE', 'TZID:Asia/Kolkata', 'X-LIC-LOCATION:Asia/Kolkata',
+        'BEGIN:STANDARD', 'TZOFFSETFROM:+0530', 'TZOFFSETTO:+0530', 'TZNAME:IST', 'DTSTART:19700101T000000', 'END:STANDARD', 'END:VTIMEZONE',
+        'BEGIN:VEVENT', 'UID:meenakshi-vishnu-wedding-20270120T110000@invitation.local',
+        'DTSTAMP:20261127T000000Z', 'DTSTART;TZID=Asia/Kolkata:20270120T110000', 'DTEND;TZID=Asia/Kolkata:20270120T120000',
+        'SUMMARY:Meenakshi & Vishnu — Wedding Ceremony',
+        'LOCATION:Mankoottathil Sree Dhramastha Bhuvaneswari Skethram',
+        'URL:https://maps.app.goo.gl/PTFMYocUWFzMn5rQ6', 'DESCRIPTION:Muhurtam at 11:00 am.\nLocation: https://maps.app.goo.gl/PTFMYocUWFzMn5rQ6',
+        'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:Meenakshi & Vishnu’s wedding is tomorrow.', 'TRIGGER;VALUE=DATE-TIME:20270119T033000Z', 'END:VALARM',
+        'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:Meenakshi & Vishnu’s wedding is today at 11:00 am.', 'TRIGGER;VALUE=DATE-TIME:20270120T033000Z', 'END:VALARM',
+        'END:VEVENT',
+        'BEGIN:VEVENT', 'UID:meenakshi-vishnu-reception-20270120T160000@invitation.local',
+        'DTSTAMP:20261127T000000Z', 'DTSTART;TZID=Asia/Kolkata:20270120T160000', 'DTEND;TZID=Asia/Kolkata:20270120T190000',
+        'SUMMARY:Meenakshi & Vishnu — Reception', 'URL:https://maps.app.goo.gl/jsHPXhBcXJYk1wwz7',
+        'DESCRIPTION:Reception celebration at 4:00 pm.\nLocation: https://maps.app.goo.gl/jsHPXhBcXJYk1wwz7',
+        'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:Meenakshi & Vishnu’s reception begins at 4:00 pm.', 'TRIGGER;VALUE=DATE-TIME:20270120T093000Z', 'END:VALARM',
+        'END:VEVENT', 'END:VCALENDAR'
+      ].join('\r\n') + '\r\n';
+      const file = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+      const url = URL.createObjectURL(file);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'Meenakshi-and-Vishnu-Wedding.ics';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+  </script>
 </body>
 </html>
