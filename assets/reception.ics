@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Vishnu and Meenakshi//Wedding Invitation//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:vishnu-meenakshi-reception-20270120@invitation.local
+DTSTAMP:20261128T000000Z
+DTSTART;TZID=Asia/Kolkata:20270120T160000
+DTEND;TZID=Asia/Kolkata:20270120T190000
+SUMMARY:Vishnu & Meenakshi — Reception
+LOCATION:Reception venue
+URL:https://maps.app.goo.gl/jsHPXhBcXJYk1wwz7
+DESCRIPTION:Reception begins at 4:00 PM IST. Directions:
+ https://maps.app.goo.gl/jsHPXhBcXJYk1wwz7
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER;VALUE=DATE-TIME:20270120T093000Z
+DESCRIPTION:Vishnu & Meenakshi’s reception begins at 4:00 PM.
+END:VALARM
+END:VEVENT
+END:VCALENDAR
